@@ -7,6 +7,6 @@ const getPrintableString = function(userInputs) {
     //call function according to command with transactionRecord and value
     //this will return new {newTransactionRecord, Value}
     //if command is save writeFile with newTransaction
-    //call getMessage according to command with value
+    //call getMessage according to command with value -----------
     //return message
 };
