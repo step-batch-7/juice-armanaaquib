@@ -1,4 +1,4 @@
-const parseSaveCmd = function(userInputs) {
+const parseSaveCmd = function(userInputs, date) {
     //const saveOptions = ['--beverage','--empId','--qty']
     const saveCmd = {
         command: "save",
@@ -6,7 +6,8 @@ const parseSaveCmd = function(userInputs) {
         value: {
             empId: userInputs[3],
             beverage: userInputs[1],
-            qty: +userInputs[5]
+            qty: +userInputs[5],
+            date
         }
     };
     //saveCmd.isValid = saveCmd.isValid &&
@@ -26,7 +27,7 @@ const parseQueryCmd = function(userInputs) {
     return queryCmd;
 };
 
-const parseCommand = function(userInputs) {
+const parseCommand = function(userInputs, date) {
     //const commands = ["--save", "--query"];
     const command = userInputs[0].slice(2);
     const parseCmd = {
@@ -40,7 +41,7 @@ const parseCommand = function(userInputs) {
         value: {}
     }
     */
-    return parseCmd[command](userInputs.slice(1));
+    return parseCmd[command](userInputs.slice(1), date);
 };
 
 exports.parseCommand = parseCommand;

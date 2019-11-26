@@ -1,9 +1,5 @@
 const readRecord = function(isExist, filePath, reader, encoding) {
-    if (!isExist(filePath)) {
-        return "{}";
-    }
-
-    return reader(filePath, encoding);
+    return (!isExist(filePath) && "[]") || reader(filePath, encoding);
 };
 
 const writeRecord = function(writer, filePath, record, encoding) {

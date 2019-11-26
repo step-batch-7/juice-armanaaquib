@@ -9,7 +9,7 @@ describe("Testing readRecord", function() {
         };
         assert.deepStrictEqual(
             utils.readRecord(isExist, "./correctFile", () => "reader", "utf-8"),
-            "{}"
+            "[]"
         );
     });
 
@@ -19,7 +19,7 @@ describe("Testing readRecord", function() {
         };
         assert.deepStrictEqual(
             utils.readRecord(isExist, "./correctFile", () => "reader", "utf-8"),
-            "{}"
+            "[]"
         );
     });
 
