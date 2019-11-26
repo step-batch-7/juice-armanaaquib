@@ -1,13 +1,13 @@
-const readRecord = function(path, reader, isExist) {
-    if (!isExist(path)) {
+const readRecord = function(isExist, filePath, reader, encoding) {
+    if (!isExist(filePath)) {
         return {};
     }
 
-    return reader(path, "utf-8");
+    return reader(filePath, encoding);
 };
 
-const writeRecord = function(filePath, writer, record) {
-    writer(filePath, record, "utf-8");
+const writeRecord = function(writer, filePath, record, encoding) {
+    writer(filePath, record, encoding);
 };
 
 exports.readRecord = readRecord;

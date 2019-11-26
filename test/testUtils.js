@@ -2,41 +2,54 @@ const utils = require("../src/utils");
 const assert = require("assert");
 
 describe("Testing readRecord", function() {
-    it("should reader return valid string", function() {
-        const reader = function() {
+    it("should right file path passed to isExist", function() {
+        const isExist = function(path) {
+            assert.strictEqual(path, "./correctFile");
+            return false;
+        };
+        assert.deepStrictEqual(
+            utils.readRecord(isExist, "./correctFile", () => "reader", "utf-8"),
+            {}
+        );
+    });
+
+    it("should return empty object if file not availabe", function() {
+        const isExist = function(path) {
+            return false;
+        };
+        assert.deepStrictEqual(
+            utils.readRecord(isExist, "./correctFile", () => "reader", "utf-8"),
+            {}
+        );
+    });
+
+    it("should actual reader called once with right path and encoding if file available", function() {
+        let calledTimes = 0;
+        const reader = function(path, encoding) {
+            assert.strictEqual(path, "./correctFile");
+            assert.strictEqual(encoding, "utf-8");
+            calledTimes += 1;
             return "reader return string";
         };
         const isExist = function(path) {
             return true;
         };
         const expectedString = "reader return string";
-        assert.deepStrictEqual(utils.readRecord("path", reader, isExist), expectedString);
+        assert.deepStrictEqual(utils.readRecord(isExist, "./correctFile", reader, "utf-8"), expectedString);
+        assert.strictEqual(calledTimes, 1);
     });
+});
 
-    it("should return reader return value if file is availabe", function() {
-        const isExist = function(path) {
-            return path === "path";
+describe("Testing writeRecord", function() {
+    it("should actual writer called with right path, record and encoding", function() {
+        let calledTimes = 0;
+        const writer = function(path, record, encoding) {
+            assert.strictEqual(path, "./correctFile");
+            assert.strictEqual(record, "records");
+            assert.strictEqual(encoding, "utf-8");
+            calledTimes += 1;
         };
-        const reader = function(path) {
-            return "file exists.";
-        };
-        assert.deepStrictEqual(utils.readRecord("path", reader, isExist), "file exists.");
-    });
-
-    it("should return empty object if file not availabe", function() {
-        const isExist = function(path) {
-            return path === "otherPath";
-        };
-        assert.deepStrictEqual(utils.readRecord("path", "reader", isExist), {});
-    });
-
-    it("should return true if path is not changed", function() {
-        const reader = function(path) {
-            return path == "correctPath";
-        };
-        const isExist = function(path) {
-            return true;
-        };
-        assert.deepStrictEqual(utils.readRecord("correctPath", reader, isExist), true);
+        assert.deepStrictEqual(utils.writeRecord(writer, "./correctFile", "records", "utf-8"), undefined);
+        assert.strictEqual(calledTimes, 1);
     });
 });
