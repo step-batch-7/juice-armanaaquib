@@ -1,3 +1,7 @@
+const addQty = function(qty, transactionDetail) {
+    return qty + transactionDetail.qty;
+};
+
 const addTransactionMessage = function(message, transaction) {
     message += "\n" + transaction.empId + ",";
     message += transaction.beverage + ",";
@@ -6,19 +10,20 @@ const addTransactionMessage = function(message, transaction) {
     return message;
 };
 
-const saveMessage = function(transactionDetail, date) {
-    transactionDetail.date = date;
+const saveMessage = function(transactionDetail) {
     let message = "Transaction Recorded:";
     message += "\nEmployee ID,Beverage,Quantity,Date";
     return addTransactionMessage(message, transactionDetail);
 };
 
-const queryMessage = function(transactionsDetails) {
+const queryMessage = function(transactions) {
     let message = "Employee ID,Beverage,Quantity,Date";
-    message = transactionsDetails.transactions.reduce(addTransactionMessage, message);
-    return message + "\nTotal: " + transactionsDetails.total + " Juices";
+    message = transactions.reduce(addTransactionMessage, message);
+    const totalQty = transactions.reduce(addQty, 0);
+    return message + "\nTotal: " + totalQty + " Juices";
 };
 
-exports.save = saveMessage;
-exports.query = queryMessage;
 exports.addTransactionMessage = addTransactionMessage;
+exports.save = saveMessage;
+exports.addQty = addQty;
+exports.query = queryMessage;
