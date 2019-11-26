@@ -1,6 +1,6 @@
 const readRecord = function(isExist, filePath, reader, encoding) {
     if (!isExist(filePath)) {
-        return {};
+        return "{}";
     }
 
     return reader(filePath, encoding);

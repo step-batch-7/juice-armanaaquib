@@ -6,10 +6,11 @@ const addTransactionMessage = function(message, transaction) {
     return message;
 };
 
-const saveMessage = function(transaction) {
+const saveMessage = function(transactionDetail, date) {
+    transactionDetail.date = date;
     let message = "Transaction Recorded:";
     message += "\nEmployee ID,Beverage,Quantity,Date";
-    return addTransactionMessage(message, transaction);
+    return addTransactionMessage(message, transactionDetail);
 };
 
 const queryMessage = function(transactionsDetails) {

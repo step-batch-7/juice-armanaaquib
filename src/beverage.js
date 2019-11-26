@@ -1,12 +1,23 @@
+const parseCommand = require("./parseCommand").parseCommand;
+const evalCommand = require("./evalCommand");
+const getMessage = require("./getMessage.js");
+const utils = require("./utils");
+const fs = require("fs");
+
 const getPrintableString = function(userInputs) {
-    //parse -- userInputs -- > {isValid,command,value}
-    //if isValid is true then go further otherwise just say return error
-    //trnasactionRecord = {}
-    //readFile if it exist and update transactionRecaord
-    //readFile if it is not exit and command is query then not found
-    //call function according to command with transactionRecord and value
-    //this will return new {newTransactionRecord, Value}
-    //if command is save writeFile with newTransaction
-    //call getMessage according to command with value -----------
-    //return message
+    const commandDetails = parseCommand(userInputs);
+    const transactionRecord = JSON.parse(
+        utils.readRecord(fs.existsSync, "./beverageRecord.json", fs.readFileSync, "utf-8")
+    );
+
+    if (commandDetails.command === "save") {
+        const updatedTransactionRecord = evalCommand.save(transactionRecord, commandDetails.value, new Date().toJSON());
+        utils.writeRecord(fs.writeFileSync, "./beverageRecord.json", JSON.stringify(updatedTransactionRecord), "utf-8");
+        return getMessage.save(commandDetails.value, new Date().toJSON());
+    }
+
+    const matchedTransactions = evalCommand.evalQuery(transactionRecord, commandDetails.value);
+    return getMessage.query(matchedTransactions);
 };
+
+exports.getPrintableString = getPrintableString;

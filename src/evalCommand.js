@@ -1,3 +1,21 @@
+const evalSave = function(transactionsRecord, transactionDetail, date) {
+    transactionDetail.date = date;
+    const empId = transactionDetail.empId;
+    const transaction = {
+        beverage: transactionDetail.beverage,
+        qty: transactionDetail.qty,
+        date: transactionDetail.date
+    };
+    if (!transactionsRecord[empId]) {
+        transactionsRecord[empId] = {
+            empId: empId,
+            transactions: []
+        };
+    }
+    transactionsRecord[empId].transactions.push(transaction);
+    return transactionsRecord;
+};
+
 const sumQty = function(qty, transactionDetail) {
     return qty + transactionDetail.qty;
 };
@@ -7,21 +25,6 @@ const insertEmpId = function(empId) {
         transactionDetail.empId = empId;
         return transactionDetail;
     };
-};
-
-const evalSave = function(transactionsRecord, transactionDetail) {
-    const empId = transactionDetail.empId;
-    const transaction = transactionDetail.transaction;
-
-    if (!transactionsRecord[empId]) {
-        transactionsRecord[empId] = {
-            empId: empId,
-            transactions: []
-        };
-    }
-
-    transactionsRecord[empId].transactions.push(transaction);
-    return transactionsRecord;
 };
 
 const evalQuery = function(transactionsRecord, transactionDetail) {

@@ -5,13 +5,11 @@ describe("Testing evalSave", function() {
     it("should update empty record", function() {
         const transactionDetail = {
             empId: "25275",
-            transaction: {
-                beverage: "watermelon",
-                qty: 2,
-                date: "2019-11-25T10:40:40.480Z"
-            }
+            beverage: "watermelon",
+            qty: 2
         };
-        const actualTransactionRecord = evalCommand.save({}, transactionDetail);
+        const date = "2019-11-25T10:40:40.480Z";
+        const actualTransactionRecord = evalCommand.save({}, transactionDetail, date);
 
         const exptectedTransactionRecords = {
             "25275": {
@@ -20,7 +18,7 @@ describe("Testing evalSave", function() {
             }
         };
 
-        assert.deepStrictEqual(actualTransactionRecord, exptectedTransactionRecords);
+        assert.deepStrictEqual(actualTransactionRecord, exptectedTransactionRecords, date);
     });
 
     it("should update already available empId", function() {
@@ -32,13 +30,11 @@ describe("Testing evalSave", function() {
         };
         const transactionDetail = {
             empId: "25275",
-            transaction: {
-                beverage: "watermelon",
-                qty: 2,
-                date: "2019-11-25T10:40:40.480Z"
-            }
+            beverage: "watermelon",
+            qty: 2
         };
-        const actualTransactionRecord = evalCommand.save(transactionRecords, transactionDetail);
+        const date = "2019-11-25T10:40:40.480Z";
+        const actualTransactionRecord = evalCommand.save(transactionRecords, transactionDetail, date);
 
         const exptectedTransactionRecords = {
             "25275": {
@@ -65,13 +61,12 @@ describe("Testing evalSave", function() {
         };
         const transactionDetail = {
             empId: "25346",
-            transaction: {
-                beverage: "pineapple",
-                qty: 1,
-                date: "2019-11-25T10:54:17.069Z"
-            }
+            beverage: "pineapple",
+            qty: 1,
+            date: "2019-11-25T10:54:17.069Z"
         };
-        const actualTransactionRecord = evalCommand.save(transactionRecords, transactionDetail);
+        const date = "2019-11-25T10:54:17.069Z";
+        const actualTransactionRecord = evalCommand.save(transactionRecords, transactionDetail, date);
 
         const exptectedTransactionRecords = {
             "25275": {

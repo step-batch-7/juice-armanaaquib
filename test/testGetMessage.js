@@ -41,14 +41,13 @@ describe("Testing saveMessage", function() {
         const transaction = {
             empId: 25275,
             beverage: "papaya",
-            qty: 2,
-            date: "2019-11-23T11:45:42.498Z"
+            qty: 2
         };
-
+        const date = "2019-11-23T11:45:42.498Z";
         let expectedMessage = "Transaction Recorded:";
         expectedMessage += "\nEmployee ID,Beverage,Quantity,Date";
         expectedMessage += "\n25275,papaya,2,2019-11-23T11:45:42.498Z";
-        assert.deepStrictEqual(getMessage["save"](transaction), expectedMessage);
+        assert.deepStrictEqual(getMessage["save"](transaction, date), expectedMessage);
     });
 });
 

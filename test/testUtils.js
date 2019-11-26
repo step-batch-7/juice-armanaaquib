@@ -9,7 +9,7 @@ describe("Testing readRecord", function() {
         };
         assert.deepStrictEqual(
             utils.readRecord(isExist, "./correctFile", () => "reader", "utf-8"),
-            {}
+            "{}"
         );
     });
 
@@ -19,7 +19,7 @@ describe("Testing readRecord", function() {
         };
         assert.deepStrictEqual(
             utils.readRecord(isExist, "./correctFile", () => "reader", "utf-8"),
-            {}
+            "{}"
         );
     });
 
@@ -41,7 +41,7 @@ describe("Testing readRecord", function() {
 });
 
 describe("Testing writeRecord", function() {
-    it("should actual writer called with right path, record and encoding", function() {
+    it("should actual writer called once with right path, record and encoding", function() {
         let calledTimes = 0;
         const writer = function(path, record, encoding) {
             assert.strictEqual(path, "./correctFile");
