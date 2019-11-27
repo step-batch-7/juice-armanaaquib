@@ -3,22 +3,22 @@ const assert = require("assert");
 
 describe("Testing readRecord", function() {
     it("should right file path passed to isExist", function() {
-        const isExist = function(path) {
+        const doesExist = function(path) {
             assert.strictEqual(path, "./correctFile");
             return false;
         };
         assert.deepStrictEqual(
-            utils.readRecord(isExist, "./correctFile", () => "reader", "utf-8"),
+            utils.readRecord(doesExist, "./correctFile", () => "reader", "utf-8"),
             "[]"
         );
     });
 
     it("should return empty object if file not availabe", function() {
-        const isExist = function(path) {
+        const doesExist = function(path) {
             return false;
         };
         assert.deepStrictEqual(
-            utils.readRecord(isExist, "./correctFile", () => "reader", "utf-8"),
+            utils.readRecord(doesExist, "./correctFile", () => "reader", "utf-8"),
             "[]"
         );
     });
@@ -31,11 +31,11 @@ describe("Testing readRecord", function() {
             calledTimes += 1;
             return "reader return string";
         };
-        const isExist = function(path) {
+        const doesExist = function(path) {
             return true;
         };
         const expectedString = "reader return string";
-        assert.deepStrictEqual(utils.readRecord(isExist, "./correctFile", reader, "utf-8"), expectedString);
+        assert.deepStrictEqual(utils.readRecord(doesExist, "./correctFile", reader, "utf-8"), expectedString);
         assert.strictEqual(calledTimes, 1);
     });
 });

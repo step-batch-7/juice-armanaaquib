@@ -1,7 +1,18 @@
-const getPrintableString = require("./src/beverage").getPrintableString;
+const getMessageAndPerformCommand = require("./src/getMessageAndPerformCommand").getMessageAndPerformCommand;
+const fs = require("fs");
+
 const beverage = function() {
     console.log("Anna Juice Ltd");
-    //console.log(getPrintableString(process.argv.slice(2)));
+    const requiredProperties = {
+        doesExist: fs.existsSync,
+        reader: fs.readFileSync,
+        writer: fs.writeFileSync,
+        date: () => new Date().toJSON(),
+        filePath: "./beverageRecord.json",
+        encodingType: "utf-8"
+    };
+
+    console.log(getMessageAndPerformCommand(process.argv.slice(2), requiredProperties));
 };
 
 beverage();
