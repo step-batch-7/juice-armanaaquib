@@ -4,7 +4,7 @@ const parseSaveCmd = function(userInputs, date) {
         command: "save",
         isValid: true,
         value: {
-            empId: userInputs[3],
+            empId: +userInputs[3],
             beverage: userInputs[1],
             qty: +userInputs[5],
             date
@@ -20,7 +20,7 @@ const parseQueryCmd = function(userInputs) {
         command: "query",
         isValid: true,
         value: {
-            empId: userInputs[1]
+            empId: +userInputs[1]
         }
     };
     //queryCmd.isValid = queryCmd.isValid && queryOptions.includes(userInputs[0]);

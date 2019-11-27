@@ -3,163 +3,92 @@ const assert = require("assert");
 
 describe("Testing evalSave", function() {
     it("should update empty record", function() {
-        const transactionDetail = {
-            empId: "25275",
+        const transaction = {
+            empId: 25275,
             beverage: "watermelon",
-            qty: 2
+            qty: 2,
+            date: "2019-11-25T10:40:40.480Z"
         };
-        const date = "2019-11-25T10:40:40.480Z";
-        const actualTransactionRecord = evalCommand.save({}, transactionDetail, date);
+        const actualTransactionRecord = evalCommand.save([], transaction);
 
-        const exptectedTransactionRecords = {
-            "25275": {
-                empId: "25275",
-                transactions: [{ beverage: "watermelon", qty: 2, date: "2019-11-25T10:40:40.480Z" }]
-            }
-        };
+        const exptectedTransactionRecords = [
+            { empId: 25275, beverage: "watermelon", qty: 2, date: "2019-11-25T10:40:40.480Z" }
+        ];
 
-        assert.deepStrictEqual(actualTransactionRecord, exptectedTransactionRecords, date);
+        assert.deepStrictEqual(actualTransactionRecord, exptectedTransactionRecords);
     });
 
     it("should update already available empId", function() {
-        const transactionRecords = {
-            "25275": {
-                empId: "25275",
-                transactions: [{ beverage: "papaya", qty: 1, date: "2019-11-25T10:35:45.860Z" }]
-            }
-        };
-        const transactionDetail = {
-            empId: "25275",
+        const transactionRecords = [{ empId: 25275, beverage: "papaya", qty: 1, date: "2019-11-25T10:35:45.860Z" }];
+        const transaction = {
+            empId: 25275,
             beverage: "watermelon",
-            qty: 2
+            qty: 2,
+            date: "2019-11-25T10:40:40.480Z"
         };
-        const date = "2019-11-25T10:40:40.480Z";
-        const actualTransactionRecord = evalCommand.save(transactionRecords, transactionDetail, date);
+        const actualTransactionRecord = evalCommand.save(transactionRecords, transaction);
 
-        const exptectedTransactionRecords = {
-            "25275": {
-                empId: "25275",
-                transactions: [
-                    { beverage: "papaya", qty: 1, date: "2019-11-25T10:35:45.860Z" },
-                    { beverage: "watermelon", qty: 2, date: "2019-11-25T10:40:40.480Z" }
-                ]
-            }
-        };
+        const exptectedTransactionRecords = [
+            { empId: 25275, beverage: "papaya", qty: 1, date: "2019-11-25T10:35:45.860Z" },
+            { empId: 25275, beverage: "watermelon", qty: 2, date: "2019-11-25T10:40:40.480Z" }
+        ];
 
         assert.deepStrictEqual(actualTransactionRecord, exptectedTransactionRecords);
     });
 
     it("should add new empId", function() {
-        const transactionRecords = {
-            "25275": {
-                empId: "25275",
-                transactions: [
-                    { beverage: "papaya", qty: 1, date: "2019-11-25T10:35:45.860Z" },
-                    { beverage: "watermelon", qty: 2, date: "2019-11-25T10:40:40.480Z" }
-                ]
-            }
-        };
-        const transactionDetail = {
-            empId: "25346",
+        const transactionRecords = [
+            { empId: 25275, beverage: "papaya", qty: 1, date: "2019-11-25T10:35:45.860Z" },
+            { empId: 25275, beverage: "watermelon", qty: 2, date: "2019-11-25T10:40:40.480Z" }
+        ];
+        const transaction = {
+            empId: 25346,
             beverage: "pineapple",
             qty: 1,
             date: "2019-11-25T10:54:17.069Z"
         };
-        const date = "2019-11-25T10:54:17.069Z";
-        const actualTransactionRecord = evalCommand.save(transactionRecords, transactionDetail, date);
+        const actualTransactionRecord = evalCommand.save(transactionRecords, transaction);
 
-        const exptectedTransactionRecords = {
-            "25275": {
-                empId: "25275",
-                transactions: [
-                    { beverage: "papaya", qty: 1, date: "2019-11-25T10:35:45.860Z" },
-                    { beverage: "watermelon", qty: 2, date: "2019-11-25T10:40:40.480Z" }
-                ]
-            },
-            "25346": {
-                empId: "25346",
-                transactions: [{ beverage: "pineapple", qty: 1, date: "2019-11-25T10:54:17.069Z" }]
-            }
-        };
+        const exptectedTransactionRecords = [
+            { empId: 25275, beverage: "papaya", qty: 1, date: "2019-11-25T10:35:45.860Z" },
+            { empId: 25275, beverage: "watermelon", qty: 2, date: "2019-11-25T10:40:40.480Z" },
+            { empId: 25346, beverage: "pineapple", qty: 1, date: "2019-11-25T10:54:17.069Z" }
+        ];
         assert.deepStrictEqual(actualTransactionRecord, exptectedTransactionRecords);
     });
 });
 
-describe("Testing sumQty", function() {
-    it("should add passed transaction qty with previous qty", function() {
-        const transaction = {
-            beverage: "apple",
-            qty: 2,
-            date: "2019-11-26T05:17:32.843Z"
-        };
-        assert.deepStrictEqual(evalCommand.sumQty(1, transaction), 3);
+describe("Testing isQueriedEmpId", function() {
+    it("should return true if empId is same", function() {
+        const transaction = { empId: 25275, beverage: "papaya", qty: 1, date: "2019-11-25T10:35:45.860Z" };
+        assert.deepStrictEqual(evalCommand.isQueriedEmpId(25275)(transaction), true);
     });
-});
 
-describe("Testing insertEmpId", function() {
-    it("should add empId to transaction", function() {
-        const transaction = {
-            beverage: "apple",
-            qty: 2,
-            date: "2019-11-26T05:17:32.843Z"
-        };
-
-        const expectedValue = {
-            empId: "25275",
-            beverage: "apple",
-            qty: 2,
-            date: "2019-11-26T05:17:32.843Z"
-        };
-        assert.deepStrictEqual(evalCommand.insertEmpId("25275")(transaction), expectedValue);
+    it("should return false if empId is not same", function() {
+        const transaction = { empId: 25275, beverage: "papaya", qty: 1, date: "2019-11-25T10:35:45.860Z" };
+        assert.deepStrictEqual(evalCommand.isQueriedEmpId(25276)(transaction), false);
     });
 });
 
 describe("Testing evalQuery", function() {
     it("should give empty for empty record", function() {
-        const expectedValue = {
-            total: 0,
-            transactions: []
-        };
-        assert.deepStrictEqual(evalCommand.evalQuery({}, { empId: "25275" }), expectedValue);
+        assert.deepStrictEqual(evalCommand.query([], { empId: 25275 }), []);
     });
 
     it("should give one transaction for one record", function() {
-        const transactionRecords = {
-            "25275": {
-                empId: "25275",
-                transactions: [{ beverage: "papaya", qty: 1, date: "2019-11-25T10:35:45.860Z" }]
-            }
-        };
+        const transactionRecords = [{ empId: 25275, beverage: "papaya", qty: 1, date: "2019-11-25T10:35:45.860Z" }];
 
-        const expectedValue = {
-            total: 1,
-            transactions: [{ empId: "25275", beverage: "papaya", qty: 1, date: "2019-11-25T10:35:45.860Z" }]
-        };
-        assert.deepStrictEqual(evalCommand.evalQuery(transactionRecords, { empId: "25275" }), expectedValue);
+        const expectedValue = [{ empId: 25275, beverage: "papaya", qty: 1, date: "2019-11-25T10:35:45.860Z" }];
+        assert.deepStrictEqual(evalCommand.query(transactionRecords, { empId: 25275 }), expectedValue);
     });
 
-    it("should give more than one transaction for more than one record", function() {
-        const transactionRecords = {
-            "25275": {
-                empId: "25275",
-                transactions: [
-                    { beverage: "papaya", qty: 1, date: "2019-11-25T10:35:45.860Z" },
-                    { beverage: "watermelon", qty: 2, date: "2019-11-25T10:40:40.480Z" }
-                ]
-            },
-            "25346": {
-                empId: "25346",
-                transactions: [{ beverage: "pineapple", qty: 1, date: "2019-11-25T10:54:17.069Z" }]
-            }
-        };
-
-        const expectedValue = {
-            total: 3,
-            transactions: [
-                { empId: "25275", beverage: "papaya", qty: 1, date: "2019-11-25T10:35:45.860Z" },
-                { empId: "25275", beverage: "watermelon", qty: 2, date: "2019-11-25T10:40:40.480Z" }
-            ]
-        };
-        assert.deepStrictEqual(evalCommand.evalQuery(transactionRecords, { empId: "25275" }), expectedValue);
+    it("should give 0 transaction if empId is not available", function() {
+        const transactionRecords = [
+            { empId: 25275, beverage: "papaya", qty: 1, date: "2019-11-25T10:35:45.860Z" },
+            { empId: 25275, beverage: "watermelon", qty: 2, date: "2019-11-25T10:40:40.480Z" },
+            { empId: 25346, beverage: "pineapple", qty: 1, date: "2019-11-25T10:54:17.069Z" }
+        ];
+        const expectedValue = [];
+        assert.deepStrictEqual(evalCommand.query(transactionRecords, { empId: 25276 }), expectedValue);
     });
 });

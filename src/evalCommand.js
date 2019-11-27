@@ -1,49 +1,20 @@
-const evalSave = function(transactionsRecord, transactionDetail, date) {
-    transactionDetail.date = date;
-    const empId = transactionDetail.empId;
-    const transaction = {
-        beverage: transactionDetail.beverage,
-        qty: transactionDetail.qty,
-        date: transactionDetail.date
+const isQueriedEmpId = function(empId) {
+    return function(transaction) {
+        return transaction.empId === empId;
     };
-    if (!transactionsRecord[empId]) {
-        transactionsRecord[empId] = {
-            empId: empId,
-            transactions: []
-        };
-    }
-    transactionsRecord[empId].transactions.push(transaction);
+};
+
+const evalSave = function(transactionsRecord, transaction) {
+    transactionsRecord.push(transaction);
     return transactionsRecord;
 };
 
-const sumQty = function(qty, transactionDetail) {
-    return qty + transactionDetail.qty;
-};
-
-const insertEmpId = function(empId) {
-    return function(transactionDetail) {
-        transactionDetail.empId = empId;
-        return transactionDetail;
-    };
-};
-
-const evalQuery = function(transactionsRecord, transactionDetail) {
-    transactionsDetail = {
-        total: 0,
-        transactions: []
-    };
-    const empId = transactionDetail.empId;
-
-    if (transactionsRecord[empId]) {
-        transactionsDetail.transactions = transactionsRecord[empId].transactions;
-        transactionsDetail.total = transactionsDetail.transactions.reduce(sumQty, 0);
-        transactionsDetail.transactions = transactionsDetail.transactions.map(insertEmpId(empId));
-    }
-
-    return transactionsDetail;
+const evalQuery = function(transactionsRecord, queriedTransactionsDetail) {
+    const empId = queriedTransactionsDetail.empId;
+    const queriedTransactions = transactionsRecord.filter(isQueriedEmpId(empId));
+    return queriedTransactions;
 };
 
 exports.save = evalSave;
-exports.sumQty = sumQty;
-exports.insertEmpId = insertEmpId;
-exports.evalQuery = evalQuery;
+exports.isQueriedEmpId = isQueriedEmpId;
+exports.query = evalQuery;

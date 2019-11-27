@@ -10,7 +10,7 @@ describe("Testing parseCommand", function() {
             command: "save",
             isValid: true,
             value: {
-                empId: "25275",
+                empId: 25275,
                 beverage: "orange",
                 qty: 1,
                 date
@@ -25,7 +25,7 @@ describe("Testing parseCommand", function() {
             command: "query",
             isValid: true,
             value: {
-                empId: "25275"
+                empId: 25275
             }
         };
         assert.deepStrictEqual(parseCommand(userArgs), expectedValue);

@@ -25,7 +25,7 @@ describe("Testing addTransactionMessage", function() {
         const transaction = {
             empId: 25275,
             beverage: "papaya",
-            qty: "1",
+            qty: 1,
             date: "2019-11-23T11:45:42.498Z"
         };
 
