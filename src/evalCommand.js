@@ -1,14 +1,32 @@
 const isQueried = function(queried) {
     return function(transaction) {
-        const isQueriedEmpId = transaction.empId === queried.empId;
-        const isQueriedDate = transaction.date.slice(0, 10) === queried.date;
-        const isQueriedBeverage = transaction.beverage === queried.beverage;
+        /*
+        let isQueriedEmpId = transaction.empId === queried.empId;
+        let isQueriedDate = transaction.date.slice(0, 10) === queried.date;
+        let isQueriedBeverage = transaction.beverage === queried.beverage;
 
-        let isQueried = (queried.empId && isQueriedEmpId) || (true && !queried.empId);
-        isQueried = isQueried && ((queried.date && isQueriedDate) || (true && !queried.date));
-        isQueried = isQueried && ((queried.beverage && isQueriedBeverage) || (true && !queried.beverage));
+        isQueriedEmpId = (queried.empId && isQueriedEmpId) || (true && !queried.empId);
+        isQueriedDate = isQueried && ((queried.date && isQueriedDate) || (true && !queried.date));
+        isQueriedBeverage = isQueried && ((queried.beverage && isQueriedBeverage) || (true && !queried.beverage));
+        */
 
-        return isQueried;
+        let isQueriedEmpId = true;
+        let isQueriedBeverage = true;
+        let isQueriedDate = true;
+
+        if (queried.empId !== undefined) {
+            isQueriedEmpId = transaction.empId === queried.empId;
+        }
+
+        if (queried.beverage !== undefined) {
+            isQueriedBeverage = transaction.beverage === queried.beverage;
+        }
+
+        if (queried.date !== undefined) {
+            isQueriedDate = transaction.date.slice(0, 10) === queried.date;
+        }
+
+        return isQueriedEmpId && isQueriedBeverage && isQueriedDate;
     };
 };
 
