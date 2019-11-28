@@ -18,6 +18,7 @@ const getMessageAndPerformCommand = function(userInputs, requiredProperties) {
 
     let transactionsRecord = utils.readRecord(doesExist, filePath, reader, encodingType);
     transactionsRecord = JSON.parse(transactionsRecord);
+    transactionsRecord = transactionsRecord.map(utils.parseToDateObj);
 
     if (commandDetails.command === "save") {
         const transaction = commandDetails.value;

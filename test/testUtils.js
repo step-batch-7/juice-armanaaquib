@@ -1,5 +1,6 @@
 const utils = require("../src/utils");
-const assert = require("assert");
+const chai = require("chai");
+const assert = chai.assert;
 
 describe("Testing readRecord", function() {
     it("should right file path passed to isExist", function() {
@@ -51,5 +52,27 @@ describe("Testing writeRecord", function() {
         };
         assert.deepStrictEqual(utils.writeRecord(writer, "./correctFile", "records", "utf-8"), undefined);
         assert.strictEqual(calledTimes, 1);
+    });
+});
+
+describe("Testing parseToDataObj", function() {
+    it("should convert date to obj", function() {
+        const date = "2019-11-28T05:59:10.881Z";
+        const transaction = {
+            empId: 25275,
+            beverage: "orange",
+            qty: 1,
+            date
+        };
+
+        const expectedDate = new Date(date);
+        const expectedTransaction = {
+            empId: 25275,
+            beverage: "orange",
+            qty: 1,
+            date: expectedDate
+        };
+
+        assert.deepStrictEqual(utils.parseToDateObj(transaction), expectedTransaction);
     });
 });

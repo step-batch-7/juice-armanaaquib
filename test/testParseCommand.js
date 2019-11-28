@@ -4,7 +4,7 @@ const parseCommand = require("../src/parseCommand").parseCommand;
 describe("Testing parseCommand", function() {
     it("should give parse command for save", function() {
         const userArgs = ["--save", "--beverage", "orange", "--empId", "25275", "--qty", "1"];
-        const date = new Date().toJSON();
+        const date = new Date();
 
         const expectedValue = {
             command: "save",

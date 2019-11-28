@@ -7,7 +7,7 @@ const beverage = function() {
         doesExist: fs.existsSync,
         reader: fs.readFileSync,
         writer: fs.writeFileSync,
-        date: () => new Date().toJSON(),
+        date: () => new Date(),
         filePath: "./beverageRecord.json",
         encodingType: "utf-8"
     };

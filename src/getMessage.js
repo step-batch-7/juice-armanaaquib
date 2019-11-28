@@ -6,7 +6,7 @@ const addTransactionMessage = function(message, transaction) {
     message += "\n" + transaction.empId + ",";
     message += transaction.beverage + ",";
     message += transaction.qty + ",";
-    message += transaction.date;
+    message += transaction.date.toJSON();
     return message;
 };
 

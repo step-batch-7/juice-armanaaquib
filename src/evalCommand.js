@@ -23,7 +23,7 @@ const isQueried = function(queried) {
         }
 
         if (queried.date !== undefined) {
-            isQueriedDate = transaction.date.slice(0, 10) === queried.date;
+            isQueriedDate = transaction.date.toJSON().slice(0, 10) === queried.date;
         }
 
         return isQueriedEmpId && isQueriedBeverage && isQueriedDate;

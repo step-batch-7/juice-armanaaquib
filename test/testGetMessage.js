@@ -10,7 +10,7 @@ describe("Testing addTransactionMessage", function() {
             empId: 25275,
             beverage: "papaya",
             qty: 1,
-            date: "2019-11-23T11:45:42.498Z"
+            date: new Date("2019-11-23T11:45:42.498Z")
         };
 
         let expectedMessage = "Transaction Recorded:";
@@ -26,7 +26,7 @@ describe("Testing addTransactionMessage", function() {
             empId: 25275,
             beverage: "papaya",
             qty: 1,
-            date: "2019-11-23T11:45:42.498Z"
+            date: new Date("2019-11-23T11:45:42.498Z")
         };
 
         let expectedMessage = "Employee ID,Beverage,Quantity,Date";
@@ -42,7 +42,7 @@ describe("Testing saveMessage", function() {
             empId: 25275,
             beverage: "papaya",
             qty: 2,
-            date: "2019-11-23T11:45:42.498Z"
+            date: new Date("2019-11-23T11:45:42.498Z")
         };
         let expectedMessage = "Transaction Recorded:";
         expectedMessage += "\nEmployee ID,Beverage,Quantity,Date";
@@ -56,7 +56,7 @@ describe("Testing addQty", function() {
         const transaction = {
             beverage: "apple",
             qty: 2,
-            date: "2019-11-26T05:17:32.843Z"
+            date: new Date("2019-11-26T05:17:32.843Z")
         };
         assert.deepStrictEqual(getMessage.addQty(1, transaction), 3);
     });
@@ -72,7 +72,7 @@ describe("Testing queryMessage", function() {
     });
 
     it("should give message for one transactions", function() {
-        const transactions = [{ empId: 25275, beverage: "papaya", qty: 1, date: "2019-11-23T11:45:42.498Z" }];
+        const transactions = [{ empId: 25275, beverage: "papaya", qty: 1, date: new Date("2019-11-23T11:45:42.498Z") }];
 
         let expectedMessage = "Employee ID,Beverage,Quantity,Date";
         expectedMessage += "\n25275,papaya,1,2019-11-23T11:45:42.498Z";
@@ -83,8 +83,8 @@ describe("Testing queryMessage", function() {
 
     it("should give message for more than one transactions", function() {
         const transactions = [
-            { empId: 25275, beverage: "Papaya", qty: 2, date: "2019-11-23T11:45:42.498Z" },
-            { empId: 25275, beverage: "Watermelon", qty: 1, date: "2019-11-24T16:08:58.736Z" }
+            { empId: 25275, beverage: "Papaya", qty: 2, date: new Date("2019-11-23T11:45:42.498Z") },
+            { empId: 25275, beverage: "Watermelon", qty: 1, date: new Date("2019-11-24T16:08:58.736Z") }
         ];
 
         let expectedMessage = "Employee ID,Beverage,Quantity,Date";
