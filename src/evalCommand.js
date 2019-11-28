@@ -1,12 +1,14 @@
-const isQueried = function(empId, date) {
+const isQueried = function(queried) {
     return function(transaction) {
-        const isValidEmpId = transaction.empId === empId;
-        const isValidDate = transaction.date.slice(0, 10) === date;
+        const isQueriedEmpId = transaction.empId === queried.empId;
+        const isQueriedDate = transaction.date.slice(0, 10) === queried.date;
+        const isQueriedBeverage = transaction.beverage === queried.beverage;
 
-        let isValid = (empId && isValidEmpId) || (true && !empId);
-        isValid = isValid && ((date && isValidDate) || (true && !date));
+        let isQueried = (queried.empId && isQueriedEmpId) || (true && !queried.empId);
+        isQueried = isQueried && ((queried.date && isQueriedDate) || (true && !queried.date));
+        isQueried = isQueried && ((queried.beverage && isQueriedBeverage) || (true && !queried.beverage));
 
-        return isValid;
+        return isQueried;
     };
 };
 
@@ -16,10 +18,7 @@ const evalSave = function(transactionsRecord, transaction) {
 };
 
 const evalQuery = function(transactionsRecord, queriedTransactionsDetail) {
-    const empId = queriedTransactionsDetail.empId;
-    const date = queriedTransactionsDetail.date;
-    const queriedTransactions = transactionsRecord.filter(isQueried(empId, date));
-
+    const queriedTransactions = transactionsRecord.filter(isQueried(queriedTransactionsDetail));
     return queriedTransactions;
 };
 
