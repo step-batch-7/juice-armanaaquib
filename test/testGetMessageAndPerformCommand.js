@@ -5,6 +5,7 @@ describe("Testing getMessageAndPerformCommand", function() {
     it("should give Save Message and update TransactionRecord if file does not exist", function() {
         const userArgs = ["--save", "--beverage", "orange", "--empId", "25275", "--qty", "1"];
         const date = new Date();
+        let calledTimes = 0;
 
         const requiredProperties = {
             doesExist: filePath => false,
@@ -12,6 +13,7 @@ describe("Testing getMessageAndPerformCommand", function() {
             writer: (filePath, transactionsRecord, encodingType) => {
                 const expectedValue = JSON.stringify([{ empId: 25275, beverage: "orange", qty: 1, date }]);
                 assert.deepStrictEqual(transactionsRecord, expectedValue);
+                calledTimes += 1;
             },
             date: () => date,
             filePath: "somePath",
@@ -24,11 +26,13 @@ describe("Testing getMessageAndPerformCommand", function() {
         expectedMessage += `\n25275,orange,1,${expectedDate}`;
 
         assert.deepStrictEqual(getMessageAndPerformCommand(userArgs, requiredProperties), expectedMessage);
+        assert.strictEqual(calledTimes, 1);
     });
 
     it("should give Save Message and update TransactionRecord if file exists", function() {
         const userArgs = ["--save", "--beverage", "orange", "--empId", "25275", "--qty", "1"];
         const date = new Date();
+        let calledTimes = 0;
 
         const requiredProperties = {
             doesExist: filePath => true,
@@ -40,6 +44,7 @@ describe("Testing getMessageAndPerformCommand", function() {
                     { empId: 25275, beverage: "orange", qty: 1, date }
                 ]);
                 assert.deepStrictEqual(transactionsRecord, expectedValue);
+                calledTimes += 1;
             },
             date: () => date,
             filePath: "somePath",
@@ -52,6 +57,7 @@ describe("Testing getMessageAndPerformCommand", function() {
         expectedMessage += `\n25275,orange,1,${expectedDate}`;
 
         assert.deepStrictEqual(getMessageAndPerformCommand(userArgs, requiredProperties), expectedMessage);
+        assert.strictEqual(calledTimes, 1);
     });
 
     it("should give query Message and if file does not exist", function() {
@@ -66,7 +72,7 @@ describe("Testing getMessageAndPerformCommand", function() {
         };
 
         let expectedMessage = "Employee ID,Beverage,Quantity,Date";
-        expectedMessage += "\nTotal: 0 Juices";
+        expectedMessage += "\nTotal: 0 Juice";
 
         assert.deepStrictEqual(getMessageAndPerformCommand(userArgs, requiredProperties), expectedMessage);
     });
@@ -84,7 +90,7 @@ describe("Testing getMessageAndPerformCommand", function() {
         };
 
         let expectedMessage = "Employee ID,Beverage,Quantity,Date";
-        expectedMessage += "\nTotal: 0 Juices";
+        expectedMessage += "\nTotal: 0 Juice";
 
         assert.deepStrictEqual(getMessageAndPerformCommand(userArgs, requiredProperties), expectedMessage);
     });
