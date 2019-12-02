@@ -10,7 +10,7 @@ const beverage = function() {
         writer: fs.writeFileSync,
         env: process.env,
         date: () => new Date(),
-        filePath: "./beverageRecord.json",
+        filePath: "./data/beverageRecord.json",
         encodingType: "utf-8"
     };
 
