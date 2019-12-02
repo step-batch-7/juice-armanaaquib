@@ -28,21 +28,65 @@ const parseQueryCmd = function(userInputs) {
     return queryCmd;
 };
 
-const parseCommand = function(userInputs, date) {
-    //const commands = ["--save", "--query"];
+/*
+const isOptionValid = function(option) {
+    const options = ["--beverge", "--qty", "--empId", "--date"];
+    return option.includes(option);
+};
+
+const isEmpIdValid = function(empId) {
+    return Number.isInteger(empId) && empId > 0;
+};
+
+const isBeverageValid = function(beverage) {
+    return true;
+};
+
+const isQtyValid = function(qty) {
+    return qty > 0;
+};
+
+const isDateValid = function(date) {
+    SON.stringify(new Date(date)).slice(1, 11) == date;
+};
+*/
+const parseCommand = function(userInputs, env, date) {
+    /*
+    const commands = ["--save", "--query"];
+    const isOptionValueVAlid = {
+        "--empId": isEmpIdValid,
+        "--beverage": isBeverageValid,
+        "--qty": isQtyValid,
+        "--date": isDateValid
+    };
+    */
     const command = userInputs[0].slice(2);
+    /*
+    const userOptions = userInputs.slice(1);
+
+    const commandDetails = {
+        command: command,
+        isValid: commands.includes(command),
+        value: {}
+    };
+
+    for (let index = 0; index < userOptions.length; index += 2) {
+        const option = userOptions[index];
+        const optionValue = userOptions[index + 1];
+
+        commandDetails.isValid = commandDetails.isValid && isOptionValid(option);
+        commandDetails.isValid = commandDetails.isValid && isOptionValueVAlid[option](optionValue);
+
+        commandDetails.value[option.slice(2)] = optionValue;
+    }
+    */
     const parseCmd = {
         save: parseSaveCmd,
         query: parseQueryCmd
     };
-    /*
-    const parseCmd = {
-        command: command,
-        isValid: commands.includes(command),
-        value: {}
-    }
-    */
-    return parseCmd[command](userInputs.slice(1), date);
+
+    const dateToAdd = env.now === undefined ? date : env.now;
+    return parseCmd[command](userInputs.slice(1), dateToAdd);
 };
 
 exports.parseCommand = parseCommand;

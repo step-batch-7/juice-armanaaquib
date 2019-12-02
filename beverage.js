@@ -1,5 +1,6 @@
-const getMessageAndPerformCommand = require("./src/getMessageAndPerformCommand").getMessageAndPerformCommand;
 const fs = require("fs");
+
+const getMessageAndPerformCommand = require("./src/getMessageAndPerformCommand").getMessageAndPerformCommand;
 
 const beverage = function() {
     console.log("Anna Juice Ltd");
@@ -7,6 +8,7 @@ const beverage = function() {
         doesExist: fs.existsSync,
         reader: fs.readFileSync,
         writer: fs.writeFileSync,
+        env: process.env,
         date: () => new Date(),
         filePath: "./beverageRecord.json",
         encodingType: "utf-8"

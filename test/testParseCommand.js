@@ -11,7 +11,9 @@ describe("Testing parseCommand", function() {
             isValid: true,
             value: { empId: 25275, beverage: "orange", qty: 1, date }
         };
-        assert.deepStrictEqual(parseCommand(userArgs, date), expectedValue);
+
+        const env = {};
+        assert.deepStrictEqual(parseCommand(userArgs, env, date), expectedValue);
     });
 
     it("should give parse command for empId query", function() {
@@ -21,7 +23,8 @@ describe("Testing parseCommand", function() {
             isValid: true,
             value: { empId: 25275, date: undefined, beverage: undefined }
         };
-        assert.deepStrictEqual(parseCommand(userArgs), expectedValue);
+        const env = {};
+        assert.deepStrictEqual(parseCommand(userArgs, env), expectedValue);
     });
 
     it("should give parse command for date query", function() {
@@ -31,7 +34,9 @@ describe("Testing parseCommand", function() {
             isValid: true,
             value: { empId: undefined, date: "2019-11-20", beverage: undefined }
         };
-        assert.deepStrictEqual(parseCommand(userArgs), expectedValue);
+
+        const env = {};
+        assert.deepStrictEqual(parseCommand(userArgs, env), expectedValue);
     });
 
     it("should give parse command for date and empId query", function() {
@@ -41,7 +46,8 @@ describe("Testing parseCommand", function() {
             isValid: true,
             value: { empId: 25275, date: "2019-11-20", beverage: undefined }
         };
-        assert.deepStrictEqual(parseCommand(userArgs), expectedValue);
+        const env = {};
+        assert.deepStrictEqual(parseCommand(userArgs, env), expectedValue);
     });
 
     it("should give parse command for beverage query", function() {
@@ -51,7 +57,8 @@ describe("Testing parseCommand", function() {
             isValid: true,
             value: { empId: undefined, date: undefined, beverage: "orange" }
         };
-        assert.deepStrictEqual(parseCommand(userArgs), expectedValue);
+        const env = {};
+        assert.deepStrictEqual(parseCommand(userArgs, env), expectedValue);
     });
 
     it("should give parse command for beverage and empId query", function() {
@@ -61,7 +68,8 @@ describe("Testing parseCommand", function() {
             isValid: true,
             value: { empId: 25275, date: undefined, beverage: "orange" }
         };
-        assert.deepStrictEqual(parseCommand(userArgs), expectedValue);
+        const env = {};
+        assert.deepStrictEqual(parseCommand(userArgs, env), expectedValue);
     });
 
     it("should give parse command for beverage and date query", function() {
@@ -71,7 +79,8 @@ describe("Testing parseCommand", function() {
             isValid: true,
             value: { empId: undefined, date: "2019-11-20", beverage: "orange" }
         };
-        assert.deepStrictEqual(parseCommand(userArgs), expectedValue);
+        const env = {};
+        assert.deepStrictEqual(parseCommand(userArgs, env), expectedValue);
     });
 
     it("should give parse command for beverage, empId and date query", function() {
@@ -81,6 +90,7 @@ describe("Testing parseCommand", function() {
             isValid: true,
             value: { empId: 25275, date: "2019-11-20", beverage: "orange" }
         };
-        assert.deepStrictEqual(parseCommand(userArgs), expectedValue);
+        const env = {};
+        assert.deepStrictEqual(parseCommand(userArgs, env), expectedValue);
     });
 });

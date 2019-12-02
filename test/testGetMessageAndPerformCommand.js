@@ -15,6 +15,7 @@ describe("Testing getMessageAndPerformCommand", function() {
                 assert.deepStrictEqual(transactionsRecord, expectedValue);
                 calledTimes += 1;
             },
+            env: {},
             date: () => date,
             filePath: "somePath",
             encodingType: "utf-8"
@@ -46,6 +47,7 @@ describe("Testing getMessageAndPerformCommand", function() {
                 assert.deepStrictEqual(transactionsRecord, expectedValue);
                 calledTimes += 1;
             },
+            env: {},
             date: () => date,
             filePath: "somePath",
             encodingType: "utf-8"
@@ -66,6 +68,7 @@ describe("Testing getMessageAndPerformCommand", function() {
             doesExist: filePath => false,
             reader: (filePath, encodingType) => "[]",
             writer: (filePath, transactionsRecord, encodingType) => {},
+            env: {},
             date: () => new Date(),
             filePath: "somePath",
             encodingType: "utf-8"
@@ -84,6 +87,7 @@ describe("Testing getMessageAndPerformCommand", function() {
             reader: (filePath, encodingType) =>
                 '[{ "empId": 25275, "beverage": "orange", "qty": 1, "date":"2019-11-27T05:56:20.097Z" }]',
             writer: (filePath, transactionsRecord, encodingType) => {},
+            env: {},
             date: () => new Date(),
             filePath: "somePath",
             encodingType: "utf-8"
@@ -102,6 +106,7 @@ describe("Testing getMessageAndPerformCommand", function() {
             reader: (filePath, encodingType) =>
                 '[{ "empId": 25275, "beverage": "orange", "qty": 1, "date":"2019-11-27T05:56:20.097Z" },{ "empId": 25275, "beverage": "papaya", "qty": 2, "date":"2019-11-27T06:37:33.103Z" },{ "empId": 25276, "beverage": "orange", "qty": 1, "date":"2019-11-27T06:39:01.925Z" }]',
             writer: (filePath, transactionsRecord, encodingType) => {},
+            env: {},
             date: () => new Date(),
             filePath: "somePath",
             encodingType: "utf-8"

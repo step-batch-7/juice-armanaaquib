@@ -1,7 +1,7 @@
-const parseCommand = require("./parseCommand").parseCommand;
 const evalCommand = require("./evalCommand");
 const getMessage = require("./getMessage.js");
 const utils = require("./utils");
+const { parseCommand } = require("./parseCommand");
 
 const saveAndGetMessage = function(transactionsRecord, requiredProperties, transaction) {
     let updatedTransactionsRecord = evalCommand.save(transactionsRecord, transaction);
@@ -22,7 +22,8 @@ const queryAndGetMessage = function(transactionsRecord, requiredProperties, quer
 
 const getMessageAndPerformCommand = function(userInputs, requiredProperties) {
     const date = requiredProperties.date();
-    const commandDetails = parseCommand(userInputs, date);
+    const env = requiredProperties.env;
+    const commandDetails = parseCommand(userInputs, env, date);
 
     if (!commandDetails.isValid) {
         return "Invalid Command or Options";
