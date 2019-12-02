@@ -2,28 +2,30 @@ const addQty = function(qty, transactionDetail) {
     return qty + transactionDetail.qty;
 };
 
-const addTransactionMessage = function(message, transaction) {
-    message += "\n" + transaction.empId + ",";
-    message += transaction.beverage + ",";
-    message += transaction.qty + ",";
-    message += transaction.date.toJSON();
-    return message;
+const getTransactionMessage = function(transaction) {
+    transactionMessage = `${transaction.empId},${transaction.beverage},`;
+    transactionMessage += `${transaction.qty},${transaction.date.toJSON()}`;
+    return transactionMessage;
 };
 
 const saveMessage = function(transaction) {
-    let message = "Transaction Recorded:";
-    message += "\nEmployee ID,Beverage,Quantity,Date";
-    return addTransactionMessage(message, transaction);
+    let headerMessage = "Transaction Recorded:";
+    headerMessage += "\nEmployee ID,Beverage,Quantity,Date";
+    return `${headerMessage}\n${getTransactionMessage(transaction)}`;
 };
 
 const queryMessage = function(transactions) {
-    let message = "Employee ID,Beverage,Quantity,Date";
-    message = transactions.reduce(addTransactionMessage, message);
+    const headerMessage = "Employee ID,Beverage,Quantity,Date";
+    const transactionMessages = transactions.map(getTransactionMessage);
+
     const totalQty = transactions.reduce(addQty, 0);
-    return message + "\nTotal: " + totalQty + " Juices";
+    const juiceSuffix = totalQty > 1 ? "Juices" : "Juice";
+    const footerMessage = `Total: ${totalQty} ${juiceSuffix}`;
+
+    return [headerMessage, ...transactionMessages, footerMessage].join("\n");
 };
 
-exports.addTransactionMessage = addTransactionMessage;
+exports.getTransactionMessage = getTransactionMessage;
 exports.save = saveMessage;
 exports.addQty = addQty;
 exports.query = queryMessage;

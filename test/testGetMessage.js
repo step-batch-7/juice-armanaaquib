@@ -1,11 +1,11 @@
+const chai = require("chai");
+const assert = chai.assert;
+
 const getMessage = require("../src/getMessage");
-const addTransactionMessage = require("../src/getMessage").addTransactionMessage;
-const assert = require("assert");
+const { getTransactionMessage } = require("../src/getMessage");
 
-describe("Testing addTransactionMessage", function() {
-    it("should addMessage for save", function() {
-        let message = "Transaction Recorded:";
-        message += "\nEmployee ID,Beverage,Quantity,Date";
+describe("getTransactionMessage", function() {
+    it("should give transaction message", function() {
         const transaction = {
             empId: 25275,
             beverage: "papaya",
@@ -13,26 +13,9 @@ describe("Testing addTransactionMessage", function() {
             date: new Date("2019-11-23T11:45:42.498Z")
         };
 
-        let expectedMessage = "Transaction Recorded:";
-        expectedMessage += "\nEmployee ID,Beverage,Quantity,Date";
-        expectedMessage += "\n25275,papaya,1,2019-11-23T11:45:42.498Z";
+        const expectedMessage = "25275,papaya,1,2019-11-23T11:45:42.498Z";
 
-        assert.deepStrictEqual(addTransactionMessage(message, transaction), expectedMessage);
-    });
-
-    it("should addMessage for query", function() {
-        const message = "Employee ID,Beverage,Quantity,Date";
-        const transaction = {
-            empId: 25275,
-            beverage: "papaya",
-            qty: 1,
-            date: new Date("2019-11-23T11:45:42.498Z")
-        };
-
-        let expectedMessage = "Employee ID,Beverage,Quantity,Date";
-        expectedMessage += "\n25275,papaya,1,2019-11-23T11:45:42.498Z";
-
-        assert.deepStrictEqual(addTransactionMessage(message, transaction), expectedMessage);
+        assert.deepStrictEqual(getTransactionMessage(transaction), expectedMessage);
     });
 });
 
@@ -66,7 +49,7 @@ describe("Testing queryMessage", function() {
     it("should give message for zero transactions", function() {
         const transactions = [];
         let expectedMessage = "Employee ID,Beverage,Quantity,Date";
-        expectedMessage += "\nTotal: 0 Juices";
+        expectedMessage += "\nTotal: 0 Juice";
 
         assert.deepStrictEqual(getMessage["query"](transactions), expectedMessage);
     });
@@ -76,7 +59,7 @@ describe("Testing queryMessage", function() {
 
         let expectedMessage = "Employee ID,Beverage,Quantity,Date";
         expectedMessage += "\n25275,papaya,1,2019-11-23T11:45:42.498Z";
-        expectedMessage += "\nTotal: 1 Juices";
+        expectedMessage += "\nTotal: 1 Juice";
 
         assert.deepStrictEqual(getMessage["query"](transactions), expectedMessage);
     });
