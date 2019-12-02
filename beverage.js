@@ -1,16 +1,16 @@
 const fs = require("fs");
 
-const getMessageAndPerformCommand = require("./src/getMessageAndPerformCommand").getMessageAndPerformCommand;
+const { getMessageAndPerformCommand } = require("./src/getMessageAndPerformCommand");
+const { getStorePath } = require("./src/config");
 
 const beverage = function() {
-    console.log("Anna Juice Ltd");
     const requiredProperties = {
         doesExist: fs.existsSync,
         reader: fs.readFileSync,
         writer: fs.writeFileSync,
         env: process.env,
         date: () => new Date(),
-        filePath: "./data/beverageRecord.json",
+        storePath: getStorePath(process.env),
         encodingType: "utf-8"
     };
 

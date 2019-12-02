@@ -7,10 +7,10 @@ const saveAndGetMessage = function(transactionsRecord, requiredProperties, trans
     let updatedTransactionsRecord = evalCommand.save(transactionsRecord, transaction);
     updatedTransactionsRecord = JSON.stringify(updatedTransactionsRecord);
 
-    const filePath = requiredProperties.filePath;
+    const storePath = requiredProperties.storePath;
     const encodingType = requiredProperties.encodingType;
     const writer = requiredProperties.writer;
-    utils.writeRecord(writer, filePath, updatedTransactionsRecord, encodingType);
+    utils.writeRecord(writer, storePath, updatedTransactionsRecord, encodingType);
 
     return getMessage.save(transaction);
 };
@@ -36,10 +36,10 @@ const getMessageAndPerformCommand = function(userInputs, requiredProperties) {
 
     const doesExist = requiredProperties.doesExist;
     const reader = requiredProperties.reader;
-    const filePath = requiredProperties.filePath;
+    const storePath = requiredProperties.storePath;
     const encodingType = requiredProperties.encodingType;
 
-    let transactionsRecord = utils.readRecord(doesExist, filePath, reader, encodingType);
+    let transactionsRecord = utils.readRecord(doesExist, storePath, reader, encodingType);
     transactionsRecord = JSON.parse(transactionsRecord);
     transactionsRecord = transactionsRecord.map(utils.parseToDateObj);
 

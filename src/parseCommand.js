@@ -14,10 +14,11 @@ const parseSaveCmd = function(userInputs, date) {
 
 const parseQueryCmd = function(userInputs) {
     //const queryOptions = ["--empId"];
-    const empId = (userInputs.includes("--empId") && +userInputs[userInputs.lastIndexOf("--empId") + 1]) || undefined;
-    const date = (userInputs.includes("--date") && userInputs[userInputs.lastIndexOf("--date") + 1]) || undefined;
-    const beverage =
-        (userInputs.includes("--beverage") && userInputs[userInputs.lastIndexOf("--beverage") + 1]) || undefined;
+    const empId = userInputs.includes("--empId") ? +userInputs[userInputs.lastIndexOf("--empId") + 1] : undefined;
+    const date = userInputs.includes("--date") ? userInputs[userInputs.lastIndexOf("--date") + 1] : undefined;
+    const beverage = userInputs.includes("--beverage")
+        ? userInputs[userInputs.lastIndexOf("--beverage") + 1]
+        : undefined;
 
     const queryCmd = {
         command: "query",
