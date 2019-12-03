@@ -5,7 +5,7 @@ const getStorePath = function(env) {
 };
 
 const getDate = function(env) {
-    const now = () => new Date(env.now).toJSON();
+    const now = () => new Date(env.now);
     const date = () => new Date();
     return env.now === undefined ? date : now;
 };

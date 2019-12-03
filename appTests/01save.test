@@ -1,0 +1,4 @@
+(export beverageRecordStorePath="./AppTests/testStore.json"; export now="2019-12-01T14:33:49.427Z"; node beverage.js --save --empId 25275 --beverage Orange --qty 2; rm ./AppTests/testStore.json)
+Transaction Recorded:
+Employee ID,Beverage,Quantity,Date
+25275,Orange,2,2019-12-01T14:33:49.427Z

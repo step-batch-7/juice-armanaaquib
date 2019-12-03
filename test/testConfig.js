@@ -19,7 +19,7 @@ describe("getStorePath", function() {
 describe("getDate", function() {
     it("should return env now if env.now is not undefined", function() {
         const env = { now: "1998-11-01" };
-        assert.strictEqual(getDate(env)(), "1998-11-01T00:00:00.000Z");
+        assert.deepStrictEqual(getDate(env)(), new Date("1998-11-01"));
     });
 
     it("should return current Date if env.now is undefined", function() {
