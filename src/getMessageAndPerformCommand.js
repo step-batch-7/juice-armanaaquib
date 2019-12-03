@@ -22,8 +22,7 @@ const queryAndGetMessage = function(transactionsRecord, requiredProperties, quer
 
 const getMessageAndPerformCommand = function(userInputs, requiredProperties) {
     const date = requiredProperties.date();
-    const env = requiredProperties.env;
-    const commandDetails = parseCommand(userInputs, env, date);
+    const commandDetails = parseCommand(userInputs, date);
 
     if (!commandDetails.isValid) {
         return "Invalid Command or Options";

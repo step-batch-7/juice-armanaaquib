@@ -51,7 +51,7 @@ const isDateValid = function(date) {
     SON.stringify(new Date(date)).slice(1, 11) == date;
 };
 */
-const parseCommand = function(userInputs, env, date) {
+const parseCommand = function(userInputs, date) {
     /*
     const commands = ["--save", "--query"];
     const isOptionValueVAlid = {
@@ -86,8 +86,7 @@ const parseCommand = function(userInputs, env, date) {
         query: parseQueryCmd
     };
 
-    const dateToAdd = env.now === undefined ? date : env.now;
-    return parseCmd[command](userInputs.slice(1), dateToAdd);
+    return parseCmd[command](userInputs.slice(1), date);
 };
 
 exports.parseCommand = parseCommand;

@@ -1,9 +1,14 @@
 const getStorePath = function(env) {
-    if (env.beverageRecordStorePath === undefined) {
-        return "./data/beverageRecord.json";
-    }
+    const testPath = env.beverageRecordStorePath;
+    const defaultPath = "./data/beverageRecord.json";
+    return testPath || defaultPath;
+};
 
-    return env.beverageRecordStorePath;
+const getDate = function(env) {
+    const now = () => new Date(env.now).toJSON();
+    const date = () => new Date();
+    return env.now === undefined ? date : now;
 };
 
 exports.getStorePath = getStorePath;
+exports.getDate = getDate;

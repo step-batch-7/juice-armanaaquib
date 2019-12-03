@@ -1,15 +1,14 @@
 const fs = require("fs");
 
 const { getMessageAndPerformCommand } = require("./src/getMessageAndPerformCommand");
-const { getStorePath } = require("./src/config");
+const { getStorePath, getDate } = require("./src/config");
 
 const beverage = function() {
     const requiredProperties = {
         doesExist: fs.existsSync,
         reader: fs.readFileSync,
         writer: fs.writeFileSync,
-        env: process.env,
-        date: () => new Date(),
+        date: getDate(process.env),
         storePath: getStorePath(process.env),
         encodingType: "utf-8"
     };
